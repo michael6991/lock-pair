@@ -2,6 +2,7 @@
 ## Lock pair for locking shared resources
 
 Example usage:
+```
 //on both cores
 static lock_pair pair((volatile uint32_t *)0x20800000, (volatile uint32_t *)0x20800004);
 //only on one core
@@ -16,3 +17,4 @@ hnd.unlock();
 
 //or on destruction
 }
+```
