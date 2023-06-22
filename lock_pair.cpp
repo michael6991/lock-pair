@@ -47,11 +47,12 @@ void lock_pair::unlock(int which) const
 
 void lock_pair::lock(int which) const
 {
-    static constexpr unsigned int min_wait_cycles   = 1 * 300; //1-2 micro
-    static constexpr unsigned int max_jitter_cycles = 4*256;   //~4-8 micros, must be binary
-    while(!try_lock(which))
-    {
-        unsigned int jitter = XT_RSR_CCOUNT() & (max_jitter_cycles - 1);
-        xos_thread_sleep(min_wait_cycles + jitter);
-    }
+     unsigned int min_wait_cycles   = 1 * 300;   //1-2 micro
+     unsigned int max_jitter_cycles = 4*256;      //~4-8 micros, must be binary
+    
+     while(!try_lock(which))
+     {
+        unsigned int jitter = RSR_CCOUNT() & (max_jitter_cycles - 1);
+        sleep(min_wait_cycles + jitter);
+      }
 }
