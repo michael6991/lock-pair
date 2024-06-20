@@ -1,5 +1,6 @@
 #pragma once
 
+
 class lock_pair
 {
 public:
@@ -14,7 +15,7 @@ public:
     constexpr lock_pair(uintptr_t mem1, uintptr_t mem2) : uint_mems{mem1, mem2}
     {}
 
-    //const so lock_pair can be constexpr
+    // const so lock_pair can be constexpr
     void init() const;
     bool try_lock(int which) const;
     void unlock(int which) const;
@@ -26,6 +27,7 @@ private:
         uintptr_t uint_mems[2];
     };
 };
+
 
 template<bool managed>
 class lock_handle
