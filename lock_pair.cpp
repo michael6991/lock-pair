@@ -1,5 +1,6 @@
 #include "lock_pair.h"
 
+
 lock_pair::lock_pair(lock_type mem1, lock_type mem2) : mems{mem1, mem2}
 {
 
@@ -18,14 +19,14 @@ bool lock_pair::try_lock(int which) const
         return false;
     }
 
-    lfence(); // memory write flush command here. (such as lfence)
+    lfence(); // memory write flush command here. (such as lfence on x86)
     *mems[which] = 1;
     lfence(); // memory write flush command here. (such as lfence)
 
-    //read what we've written to avoid async writes
+    // read what we've written to avoid async writes
     if(*mems[which] == 0)
     {
-        //write not applied yet, give up
+        // write not applied yet, give up
         *mems[which] = 0;
         return false;
     }
@@ -47,8 +48,8 @@ void lock_pair::unlock(int which) const
 
 void lock_pair::lock(int which) const
 {
-     unsigned int min_wait_cycles   = 1 * 300;   //1-2 micro
-     unsigned int max_jitter_cycles = 4*256;      //~4-8 micros, must be binary
+     unsigned int min_wait_cycles   = 1 * 300;  // 1-2 us - depends on the core
+     unsigned int max_jitter_cycles = 4 * 256;  // ~4-8 us, must be binary
     
      while(!try_lock(which))
      {
