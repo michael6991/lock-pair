@@ -1,9 +1,9 @@
 # Lock Pair
-## Lock pair for locking shared resources
+## Simple mutual exclusion mechanism to control access to a shared resource by different physical cores
 
-This concept can be usefull when you have an embedded system with SoC that contains multiple cores with access to a global shared memory such as SRAM.
-Useful when you want 2 cores to share a simple lock mechanism (mutex) that can be accessed in the shared memory region,
-and these two cores don't have any hardware locking alternative built in the SoC.
+This concept can be usefull when you have an embedded system with SoC that contains multiple cores that can access to a global shared memory such as SRAM.
+Useful when you want two or more cores to share a simple lock mechanism that can be accessed via a shared memory region.
+If the physical cores don't have any hardware locking alternative built in the SoC, lock pair can be useful.
 
 Example usage:
 ```
@@ -17,10 +17,10 @@ pair.init();
 ...
 {
   // use in functions, locks on construction
-  lock_handle hnd(pair, 0); //0 or 1
+  lock_handle lh(pair, 0); //0 or 1
 
   // unlock manually
-  hnd.unlock();
+  lh.unlock();
 
   // or on destruction
 }
