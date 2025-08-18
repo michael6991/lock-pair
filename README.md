@@ -1,5 +1,6 @@
 # Lock Pair
-## Simple mutual exclusion mechanism to control access to a shared resource by different physical cores
+## A Simple mutual exclusion mechanism to control access to a shared resource.
+### Useful when two or more physical cores share memory space.
 
 This concept can be usefull when you have an embedded system with SoC that contains multiple cores that can access to a global shared memory such as SRAM.
 Useful when you want two or more cores to share a simple lock mechanism that can be accessed via a shared memory region.
